@@ -1,0 +1,2254 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Beauty Studio Hollywood — салон краси у Запоріжжі</title>
+<meta name="description" content="Beauty Studio Hollywood — авторський салон краси у Запоріжжі. Манікюр, волосся, брови, косметологія, перманент. Запис онлайн." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Forum&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+/* ─────────────────────── TOKENS ─────────────────────── */
+:root{
+  --bg:        #f6f1e8;   /* warm linen */
+  --bg-2:      #efe7d6;
+  --sand:      #e3d6bf;
+  --cream:     #f0e8d6;
+  --sage:      #6c7a5b;
+  --sage-2:    #4f5b43;
+  --terra:     #b86848;
+  --terra-2:   #9c5238;
+  --ink:       #2a1f18;
+  --ink-soft:  #534338;
+  --line:      rgba(42,31,24,.14);
+  --line-2:    rgba(42,31,24,.28);
+
+  --display:   "Forum", "Times New Roman", serif;
+  --italic:    "Cormorant Garamond", "Times New Roman", serif;
+  --sans:      "Jost", system-ui, sans-serif;
+
+  --max:       1340px;
+  --gut:       clamp(20px, 4vw, 56px);
+
+  --radius:    18px;
+  --radius-lg: 28px;
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+html,body{background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;}
+body{
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.55;
+  font-weight:400;
+  overflow-x:hidden;
+}
+img{max-width:100%; display:block;}
+a{color:inherit; text-decoration:none;}
+button{font:inherit; color:inherit; background:none; border:0; cursor:pointer;}
+
+/* ───────────── PRIMITIVES ───────────── */
+.wrap{max-width:var(--max); margin:0 auto; padding:0 var(--gut); position:relative;}
+.eyebrow{
+  font-family:var(--sans);
+  font-weight:400;
+  font-size:11px;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  color:var(--sage-2);
+  display:inline-flex; align-items:center; gap:12px;
+}
+.eyebrow::before{content:""; width:32px; height:1px; background:currentColor;}
+h1,h2,h3,h4{font-family:var(--display); font-weight:400; color:var(--ink); letter-spacing:0;}
+.it{font-family:var(--italic); font-style:italic; font-weight:400;}
+
+/* photo placeholder system — every img sits on a gradient frame so it never looks "broken" */
+.photo{
+  position:relative;
+  background:
+    linear-gradient(140deg, #d8c6a7 0%, #c2a87f 35%, #8c7a5c 70%, #5e5340 100%);
+  overflow:hidden;
+  border-radius:var(--radius);
+  isolation:isolate;
+}
+.photo img{
+  width:100%; height:100%; object-fit:cover; object-position:center;
+  display:block;
+  transition: transform 1.4s cubic-bezier(.2,.7,.2,1), filter .8s ease;
+}
+.photo:hover img{transform:scale(1.04);}
+.photo::after{
+  content:""; position:absolute; inset:0;
+  background: linear-gradient(180deg, transparent 55%, rgba(42,31,24,.25));
+  pointer-events:none;
+}
+.photo .tag{
+  position:absolute; left:18px; bottom:18px; z-index:2;
+  font-family:var(--sans); font-size:10.5px; letter-spacing:.26em; text-transform:uppercase;
+  color:var(--cream); display:flex; gap:10px; align-items:center;
+}
+.photo .tag::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--cream);}
+
+/* reveal */
+.reveal{opacity:0; transform:translateY(22px); transition: opacity 1s cubic-bezier(.2,.7,.2,1), transform 1s cubic-bezier(.2,.7,.2,1);}
+.reveal.in{opacity:1; transform:none;}
+.d1{transition-delay:.08s;} .d2{transition-delay:.16s;} .d3{transition-delay:.24s;} .d4{transition-delay:.32s;} .d5{transition-delay:.40s;}
+
+/* ─────────────────────── TOP BAR ────────────────────── */
+.topbar{
+  background:var(--ink); color:var(--cream);
+  font-family:var(--sans); font-size:11px; letter-spacing:.26em; text-transform:uppercase;
+}
+.topbar .row{display:flex; justify-content:space-between; align-items:center; padding:9px 0; gap:14px; flex-wrap:wrap;}
+.topbar a:hover{color:#fff;}
+.topbar .sep{opacity:.4;}
+
+/* ─────────────────────── NAV ────────────────────────── */
+.nav{
+  position:sticky; top:0; z-index:50;
+  background:rgba(246,241,232,.92);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  border-bottom:1px solid var(--line);
+  transition: padding .25s ease;
+}
+.nav .row{
+  display:grid; grid-template-columns: 1fr auto 1fr;
+  align-items:center;
+  padding:18px 0;
+  gap:24px;
+}
+.nav .left{display:flex; gap:28px; align-items:center; justify-self:start;}
+.nav .right{display:flex; gap:18px; align-items:center; justify-self:end;}
+.nav a.link{
+  font-family:var(--sans); font-size:11.5px; letter-spacing:.26em; text-transform:uppercase;
+  color:var(--ink); position:relative; padding:6px 0;
+  transition:color .3s ease;
+}
+.nav a.link::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:1px;
+  background:var(--sage-2); transform:scaleX(0); transform-origin:left; transition:transform .35s ease;
+}
+.nav a.link:hover{color:var(--sage-2);}
+.nav a.link:hover::after{transform:scaleX(1);}
+.brand{
+  text-align:center; line-height:1;
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+}
+.brand .mark{
+  font-family:var(--display); font-size:30px; letter-spacing:.12em; color:var(--ink);
+  display:flex; align-items:center; gap:10px;
+}
+.brand .mark .leaf{width:22px; height:22px; color:var(--sage);}
+.brand small{
+  font-family:var(--sans); font-size:9px; font-weight:400; letter-spacing:.4em; text-transform:uppercase; color:var(--ink-soft);
+}
+.cta{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--ink); color:var(--cream);
+  padding:13px 20px; border-radius:999px;
+  font-family:var(--sans); font-weight:500; font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+  transition:background .3s ease, transform .3s ease;
+}
+.cta:hover{background:var(--sage-2); transform:translateY(-1px);}
+.cta .dot{width:6px; height:6px; background:var(--terra); border-radius:50%;}
+
+.burger{display:none; width:42px; height:42px; border:1px solid var(--line-2); border-radius:50%; align-items:center; justify-content:center;}
+.burger span, .burger span::before, .burger span::after{
+  display:block; content:""; width:16px; height:1px; background:var(--ink); position:relative;
+}
+.burger span::before{position:absolute; top:-5px; left:0; right:0;}
+.burger span::after{position:absolute; top:5px; left:0; right:0;}
+
+@media (max-width: 980px){
+  .nav .left{display:none;}
+  .nav .row{grid-template-columns: auto 1fr auto;}
+  .nav .right .link{display:none;}
+  .burger{display:inline-flex;}
+}
+
+/* mobile menu */
+.mmenu{
+  position:fixed; inset:0; z-index:60;
+  background:var(--bg);
+  padding: 80px var(--gut) 40px;
+  transform: translateY(-100%);
+  transition: transform .5s cubic-bezier(.2,.7,.2,1);
+  display:flex; flex-direction:column; gap:8px;
+}
+.mmenu.open{transform:none;}
+.mmenu a{
+  font-family:var(--display); font-size:38px; line-height:1.2; color:var(--ink);
+  padding:14px 0; border-bottom:1px solid var(--line);
+}
+.mmenu .close{position:absolute; top:22px; right:var(--gut); width:42px; height:42px; border:1px solid var(--line-2); border-radius:50%; display:grid; place-items:center;}
+.mmenu .close::before, .mmenu .close::after{content:""; position:absolute; width:16px; height:1px; background:var(--ink);}
+.mmenu .close::before{transform:rotate(45deg);}
+.mmenu .close::after{transform:rotate(-45deg);}
+
+/* ─────────────────────── HERO ───────────────────────── */
+.hero{
+  padding: clamp(40px, 6vw, 80px) 0 clamp(50px, 7vw, 100px);
+  position:relative; overflow:hidden;
+}
+.hero .grid{
+  display:grid; grid-template-columns: 1.1fr .9fr; gap: clamp(28px, 5vw, 70px);
+  align-items:end;
+}
+.hero .copy{position:relative; padding-bottom: 10px;}
+.hero h1{
+  font-family:var(--display);
+  font-size: clamp(64px, 9.4vw, 156px);
+  line-height: .95;
+  letter-spacing: -.01em;
+  color:var(--ink);
+  margin: 24px 0 18px;
+}
+.hero h1 .it{
+  display:block;
+  font-family:var(--italic); font-style:italic;
+  color: var(--sage-2);
+  font-size: .68em;
+  margin-top: 2px;
+  letter-spacing: -.01em;
+}
+.hero .lede{
+  font-family:var(--sans);
+  font-size: clamp(16px, 1.25vw, 18px);
+  line-height:1.65;
+  max-width: 44ch;
+  color:var(--ink-soft);
+  margin-bottom: 32px;
+}
+.hero .actions{display:flex; gap:18px; align-items:center; flex-wrap:wrap;}
+.btn-primary{
+  display:inline-flex; align-items:center; gap:12px;
+  background: var(--ink); color: var(--cream);
+  padding: 18px 28px; border-radius:999px;
+  font-family:var(--sans); font-weight:500; font-size:12px; letter-spacing:.26em; text-transform:uppercase;
+  transition: background .35s ease, transform .35s ease, box-shadow .35s ease;
+  box-shadow: 0 22px 50px -28px rgba(42,31,24,.5);
+}
+.btn-primary:hover{background:var(--sage-2); transform:translateY(-2px);}
+.btn-primary .arrow{
+  display:inline-block; width:14px; height:14px;
+  border-top:1px solid currentColor; border-right:1px solid currentColor;
+  transform: rotate(45deg);
+}
+.btn-ghost{
+  font-family:var(--sans); font-size:12px; letter-spacing:.26em; text-transform:uppercase;
+  color:var(--ink); padding:18px 0;
+  display:inline-flex; align-items:center; gap:10px;
+  border-bottom:1px solid var(--ink);
+}
+.btn-ghost:hover{color:var(--sage-2); border-color:var(--sage-2);}
+
+.hero .meta{
+  display:flex; gap: clamp(20px, 3vw, 40px);
+  margin-top: clamp(44px, 5vw, 70px);
+  padding-top: 28px;
+  border-top:1px solid var(--line);
+  flex-wrap:wrap;
+}
+.hero .meta .m{display:flex; flex-direction:column; gap:6px;}
+.hero .meta .m b{font-family:var(--display); font-size: clamp(28px, 2.6vw, 36px); font-weight:400; color:var(--ink); line-height:1;}
+.hero .meta .m small{font-family:var(--sans); font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-soft);}
+
+.hero .imgwrap{
+  position:relative;
+  aspect-ratio: 4/5;
+  border-radius: var(--radius-lg);
+  overflow:visible;
+}
+.hero .imgwrap .photo{
+  position:absolute; inset:0;
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(120% 80% at 20% 20%, #efd9c1 0%, #d6b594 30%, #a48261 65%, #5a4631 100%);
+}
+.hero .imgwrap .photo img{border-radius: var(--radius-lg);}
+.hero .badge{
+  position:absolute; top:-22px; left:-22px;
+  width: 130px; height:130px; border-radius:50%;
+  background: var(--cream); border:1px solid var(--ink);
+  display:grid; place-items:center; text-align:center;
+  font-family:var(--sans); font-size: 9px; letter-spacing:.26em; text-transform:uppercase; color:var(--ink);
+  padding: 12px;
+  z-index:2;
+  animation: spin 28s linear infinite;
+}
+.hero .badge svg{position:absolute; inset:0; width:100%; height:100%;}
+.hero .badge span{position:relative; z-index:2;}
+.hero .badge .center{
+  position:absolute; inset:0; display:grid; place-items:center;
+  font-family:var(--italic); font-style:italic; font-size: 30px; font-weight:500; color:var(--terra); letter-spacing:0;
+}
+@keyframes spin{from{transform:rotate(0)} to{transform:rotate(360deg)}}
+.hero .badge.no-spin{animation:none;}
+
+.hero .float-card{
+  position:absolute; right:-14px; bottom:32px;
+  background:var(--cream); border:1px solid var(--line);
+  padding: 14px 18px; border-radius: 14px;
+  display:flex; gap:12px; align-items:center;
+  box-shadow: 0 24px 50px -28px rgba(42,31,24,.45);
+  z-index:3;
+  max-width: 220px;
+}
+.hero .float-card .av{width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,#c8a37c,#6c7a5b);}
+.hero .float-card .t{font-family:var(--sans); font-size:12px; line-height:1.35; color:var(--ink);}
+.hero .float-card .t b{display:block; font-family:var(--display); font-weight:400; font-size:16px; letter-spacing:.04em; color:var(--ink); margin-bottom:2px;}
+.hero .float-card .t small{font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--sage-2);}
+
+@media (max-width: 880px){
+  .hero .grid{grid-template-columns: 1fr;}
+  .hero .imgwrap{aspect-ratio: 3/4; margin-top: 8px;}
+  .hero .badge{width:100px; height:100px; left:auto; right:-10px; top:-30px;}
+  .hero .badge .center{font-size: 22px;}
+  .hero .float-card{right:8px; bottom:10px;}
+}
+
+/* ─────────────────────── TRUST STRIP ───────────────────── */
+.trust{
+  background: var(--ink); color: var(--cream);
+  padding: clamp(28px,4vw,42px) 0;
+  overflow:hidden;
+}
+.trust .row{
+  display:flex; gap: clamp(28px, 5vw, 70px); align-items:center; justify-content:space-between; flex-wrap:wrap;
+}
+.trust .item{display:flex; gap:14px; align-items:center;}
+.trust .item .ic{
+  width: 40px; height:40px; flex:none;
+  border:1px solid rgba(246,241,232,.3); border-radius:50%;
+  display:grid; place-items:center;
+  color:var(--cream);
+}
+.trust .item .ic svg{width:18px; height:18px;}
+.trust .item .t{font-family:var(--sans); font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:rgba(246,241,232,.85);}
+.trust .item .t b{display:block; font-family:var(--display); font-size:18px; font-weight:400; letter-spacing:.04em; text-transform:none; color:var(--cream); margin-bottom:2px;}
+
+/* ─────────────────────── FEATURED SERVICES (cards) ──────── */
+.featured{
+  padding: clamp(70px,9vw,130px) 0;
+}
+.featured .head{
+  display:grid; grid-template-columns: 1fr auto; align-items:end; gap:24px; margin-bottom: clamp(36px, 5vw, 60px);
+}
+.featured h2{
+  font-size: clamp(46px, 6vw, 84px);
+  line-height: .95;
+  letter-spacing: -.01em;
+}
+.featured h2 .it{display:block; color:var(--sage-2); font-size: .9em;}
+.featured .head .nav-btns{display:flex; gap:10px;}
+.featured .nav-btn{
+  width:48px; height:48px; border-radius:50%;
+  border:1px solid var(--line-2);
+  display:grid; place-items:center;
+  transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
+}
+.featured .nav-btn svg{width:14px; height:14px;}
+.featured .nav-btn:hover{background:var(--ink); color:var(--cream); border-color:var(--ink); transform:translateY(-2px);}
+.featured .nav-btn.disabled{opacity:.3; cursor:default;}
+
+.scroller{
+  display:grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(280px, 340px);
+  gap: 22px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+.scroller::-webkit-scrollbar{display:none;}
+.s-card{
+  scroll-snap-align: start;
+  display:flex; flex-direction:column;
+  border-radius: var(--radius-lg);
+  overflow:hidden;
+  background: var(--cream);
+  border:1px solid var(--line);
+  transition: transform .4s ease, box-shadow .4s ease;
+}
+.s-card:hover{transform: translateY(-6px); box-shadow: 0 30px 60px -36px rgba(42,31,24,.35);}
+.s-card .photo{height: 320px; border-radius:0; border-bottom-left-radius:0; border-bottom-right-radius:0;}
+.s-card .photo img{border-radius:0;}
+.s-card .body{padding: 22px 22px 24px; display:flex; flex-direction:column; gap:8px;}
+.s-card .label{font-family:var(--sans); font-size:10.5px; letter-spacing:.26em; text-transform:uppercase; color:var(--sage-2);}
+.s-card h3{
+  font-family:var(--display); font-size: 28px; font-weight:400; line-height:1.1; letter-spacing:.02em;
+}
+.s-card p{font-family:var(--sans); font-size:13.5px; color:var(--ink-soft); line-height:1.55;}
+.s-card .foot{display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:14px; border-top:1px solid var(--line);}
+.s-card .foot .pr{font-family:var(--display); font-size: 22px; color:var(--ink);}
+.s-card .foot .pr small{font-family:var(--sans); font-size:11px; letter-spacing:.2em; color:var(--ink-soft); text-transform:uppercase;}
+.s-card .foot .go{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--sans); font-size:11px; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--ink);
+  border-bottom:1px solid var(--ink);
+  padding-bottom:3px;
+}
+.s-card .foot .go:hover{color:var(--terra); border-color:var(--terra);}
+
+@media (max-width: 700px){
+  .scroller{grid-auto-columns: minmax(260px, 78vw);}
+  .featured .head{grid-template-columns:1fr; align-items:start;}
+}
+
+/* ─────────────────────── PHILOSOPHY ───────────────────── */
+.philo{
+  padding: clamp(70px,9vw,130px) 0;
+  background: var(--bg-2);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.philo .grid{
+  display:grid; grid-template-columns: 1.05fr 1fr; gap: clamp(30px, 6vw, 90px); align-items:center;
+}
+.philo .imgwrap{position:relative; aspect-ratio: 5/6; border-radius: var(--radius-lg); overflow:visible;}
+.philo .imgwrap .photo{position:absolute; inset:0; border-radius: var(--radius-lg); background: radial-gradient(120% 80% at 70% 30%, #d4c9b2 0%, #a99a7e 50%, #5e5340 100%);}
+.philo .imgwrap .photo img{border-radius: var(--radius-lg);}
+.philo .imgwrap .stat{
+  position:absolute; left:-22px; bottom:32px;
+  background: var(--cream); padding: 18px 24px; border-radius: 16px;
+  border:1px solid var(--line);
+  display:flex; gap:16px; align-items:center;
+  box-shadow: 0 24px 50px -28px rgba(42,31,24,.4);
+}
+.philo .imgwrap .stat b{font-family:var(--display); font-size: 42px; line-height:1; color:var(--ink); font-weight:400;}
+.philo .imgwrap .stat small{display:block; font-family:var(--sans); font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--sage-2); margin-top:4px;}
+.philo .imgwrap .stat .div{width:1px; height: 38px; background: var(--line);}
+.philo h2{
+  font-size: clamp(40px, 5.4vw, 78px);
+  line-height: 1.02;
+  letter-spacing: -.01em;
+  margin: 22px 0 24px;
+}
+.philo h2 .it{color:var(--sage-2);}
+.philo .body{font-family:var(--sans); font-size: 16px; line-height: 1.7; color: var(--ink-soft); max-width: 50ch;}
+.philo .body p + p{margin-top: 1em;}
+.philo .pills{display:flex; gap:10px; flex-wrap:wrap; margin-top:28px;}
+.philo .pills span{
+  font-family:var(--sans); font-size:11.5px; letter-spacing:.2em; text-transform:uppercase;
+  padding: 9px 14px; border-radius:999px;
+  background: var(--cream); border:1px solid var(--line-2);
+  color:var(--ink);
+}
+.philo .signature{
+  display:flex; gap:16px; align-items:center; margin-top: 36px;
+  padding-top:24px; border-top:1px solid var(--line);
+}
+.philo .signature .av{
+  width:54px; height:54px; border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 35%, #efd9c1 0%, #c2a07a 50%, #5e4631 100%);
+  border:1px solid var(--line);
+}
+.philo .signature .t b{display:block; font-family:var(--display); font-size:22px; font-weight:400; color:var(--ink); letter-spacing:.02em;}
+.philo .signature .t small{font-family:var(--sans); font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-soft);}
+
+@media (max-width: 880px){
+  .philo .grid{grid-template-columns:1fr;}
+  .philo .imgwrap .stat{left:8px; bottom:10px;}
+}
+
+/* ─────────────────────── SERVICES (full list) ─────────── */
+.svc{padding: clamp(70px, 9vw, 130px) 0;}
+.svc .head{
+  display:grid; grid-template-columns: 1fr; gap: 20px; align-items:end; margin-bottom: clamp(36px, 5vw, 60px);
+  max-width: 980px;
+}
+.svc h2{
+  font-size: clamp(44px, 6vw, 86px); line-height: .95; letter-spacing:-.01em;
+}
+.svc h2 .it{color:var(--sage-2);}
+.svc .sub{font-family:var(--sans); font-size:15px; color:var(--ink-soft); max-width: 56ch; margin-top: 14px; line-height:1.7;}
+
+.tabs{
+  display:flex; gap:8px; flex-wrap:wrap;
+  margin: 0 0 36px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+.tab{
+  padding: 12px 18px;
+  font-family:var(--sans); font-size:12px; letter-spacing:.22em; text-transform:uppercase;
+  border-radius: 999px;
+  background: transparent; color: var(--ink);
+  border:1px solid var(--line-2);
+  transition: background .25s, color .25s, border-color .25s;
+  display:inline-flex; align-items:center; gap:10px;
+}
+.tab .n{font-family:var(--display); font-size:14px; letter-spacing:.02em; color: var(--sage-2);}
+.tab:hover{border-color:var(--ink);}
+.tab.active{background:var(--ink); color:var(--cream); border-color:var(--ink);}
+.tab.active .n{color: var(--terra);}
+
+.panel{display:none; animation: fade .45s ease;}
+.panel.active{display:grid;}
+@keyframes fade{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;}}
+
+.panel{
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(28px, 4vw, 60px);
+  align-items:start;
+}
+.panel .left .photo{aspect-ratio: 4/5; border-radius: var(--radius-lg);}
+.panel .left .photo img{border-radius: var(--radius-lg);}
+.panel .left .caption{
+  margin-top: 18px;
+  font-family:var(--italic); font-style:italic; font-size: 22px; color:var(--ink); line-height:1.4;
+  max-width: 32ch;
+}
+.panel .left .caption::before{content:"„ "; color:var(--terra); font-size:1.4em; line-height:0; position:relative; top:.1em;}
+
+.price-list{display:grid; gap:0;}
+.price-list .it{
+  display:grid; grid-template-columns: 1fr auto; gap:22px;
+  align-items:baseline;
+  padding: 18px 0;
+  border-bottom:1px dotted var(--line-2);
+  transition: padding .3s ease;
+}
+.price-list .it:first-child{border-top:1px dotted var(--line-2);}
+.price-list .it:hover{padding-left:10px;}
+.price-list .it .name{
+  font-family:var(--display); font-size: clamp(20px, 1.9vw, 26px);
+  line-height:1.2; letter-spacing: .01em;
+}
+.price-list .it .desc{
+  display:block; margin-top:6px;
+  font-family:var(--sans); font-size:13px; color: var(--ink-soft);
+  letter-spacing: 0;
+}
+.price-list .it .price{
+  font-family:var(--display); font-size: clamp(22px, 2vw, 28px);
+  white-space:nowrap; color:var(--ink);
+}
+.price-list .it .price small{font-family:var(--sans); font-size:11px; letter-spacing:.22em; color:var(--sage-2); text-transform:uppercase; margin-left:4px;}
+
+@media (max-width: 880px){
+  .panel{grid-template-columns: 1fr;}
+  .price-list .it .name{font-size: 19px;}
+}
+
+/* ─────────────────────── MASTERS ───────────────────────── */
+.masters{
+  padding: clamp(70px,9vw,130px) 0;
+  background: var(--ink);
+  color: var(--cream);
+  position:relative;
+  overflow:hidden;
+}
+.masters::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(900px 500px at 80% 0%, rgba(184,104,72,.18), transparent 60%),
+    radial-gradient(700px 400px at 0% 100%, rgba(108,122,91,.22), transparent 60%);
+}
+.masters .eyebrow{color: rgba(227,214,191,.7);}
+.masters h2{
+  color: var(--cream);
+  font-size: clamp(46px, 6vw, 90px); line-height:.95; letter-spacing:-.01em;
+  margin: 20px 0 50px;
+}
+.masters h2 .it{color: var(--terra);}
+.m-grid{display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; position:relative;}
+.m-card{
+  border: 1px solid rgba(246,241,232,.16);
+  border-radius: var(--radius-lg);
+  overflow:hidden;
+  background: rgba(255,255,255,.02);
+  transition: transform .4s ease, background .4s ease, border-color .4s ease;
+}
+.m-card:hover{transform:translateY(-6px); background: rgba(246,241,232,.05); border-color: rgba(184,104,72,.4);}
+.m-card .photo{aspect-ratio: 4/5; border-radius:0;}
+.m-card .photo img{border-radius:0;}
+.m-card .body{padding: 22px 22px 26px;}
+.m-card .role{font-family:var(--sans); font-size:10.5px; letter-spacing:.26em; text-transform:uppercase; color: var(--terra);}
+.m-card .nm{font-family:var(--display); font-size: 32px; letter-spacing:.02em; line-height:1.05; margin-top:6px; color:var(--cream);}
+.m-card .nm .it{display:block; font-family:var(--italic); font-style:italic; font-size:.6em; color: rgba(227,214,191,.75);}
+.m-card .yrs{
+  display:flex; gap:14px; align-items:center;
+  margin-top: 14px; padding-top:14px; border-top: 1px solid rgba(246,241,232,.12);
+  font-family:var(--sans); font-size:11.5px; color: rgba(227,214,191,.75); letter-spacing:.1em;
+}
+.m-card .yrs span:first-child{color: var(--cream);}
+.m-card .yrs .dot{width:4px; height:4px; border-radius:50%; background:rgba(227,214,191,.45);}
+
+@media (max-width: 880px){.m-grid{grid-template-columns:1fr;} }
+@media (min-width: 881px) and (max-width: 1100px){.m-grid{grid-template-columns: repeat(2,1fr);} }
+
+/* ─────────────────────── GALLERY ───────────────────────── */
+.gal{padding: clamp(70px,9vw,130px) 0;}
+.gal .head{
+  display:grid; grid-template-columns: 1fr auto; align-items:end; gap:24px; margin-bottom: clamp(36px, 5vw, 60px);
+}
+.gal h2{font-size: clamp(44px, 6vw, 86px); line-height:.95; letter-spacing:-.01em;}
+.gal h2 .it{color: var(--terra); }
+.gal .insta{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--sans); font-size:12px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--ink); border-bottom:1px solid var(--ink); padding-bottom:4px;
+}
+.gal .insta:hover{color:var(--terra); border-color:var(--terra);}
+.gal .insta svg{width:16px; height:16px;}
+
+.gal-grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 180px;
+  gap: 14px;
+}
+.gal-grid .photo{border-radius: 14px; overflow:hidden;}
+.gal-grid .photo img{border-radius:14px;}
+.gal-grid .a{grid-column: span 2; grid-row: span 2;}
+.gal-grid .b{grid-column: span 1; grid-row: span 1;}
+.gal-grid .c{grid-column: span 1; grid-row: span 1;}
+.gal-grid .d{grid-column: span 1; grid-row: span 2;}
+.gal-grid .e{grid-column: span 1; grid-row: span 1;}
+.gal-grid .f{grid-column: span 2; grid-row: span 1;}
+.gal-grid .g{grid-column: span 1; grid-row: span 1;}
+.gal-grid .h{grid-column: span 1; grid-row: span 1;}
+
+@media (max-width: 900px){
+  .gal-grid{grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px;}
+  .gal-grid .a{grid-column: span 2; grid-row: span 2;}
+  .gal-grid .d{grid-column: span 1; grid-row: span 2;}
+  .gal-grid .f{grid-column: span 2; grid-row: span 1;}
+  .gal-grid .g,.gal-grid .h{grid-column: span 1; grid-row: span 1;}
+}
+
+/* ─────────────────────── TESTIMONIAL ─────────────────────── */
+.test{
+  padding: clamp(70px,9vw,130px) 0;
+  background: var(--bg-2);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.test .wrap{max-width: 980px;}
+.test .eyebrow{margin-bottom: 16px;}
+.test-slide{display:none;}
+.test-slide.active{display:block; animation: fade .55s ease;}
+.test q{
+  font-family: var(--italic); font-style:italic;
+  font-size: clamp(28px, 3.6vw, 46px); line-height: 1.25; color:var(--ink);
+  display:block;
+  quotes: "«" "»";
+}
+.test q::before{content:open-quote; color: var(--terra); margin-right:.06em;}
+.test q::after{content:close-quote; color: var(--terra);}
+.test .who{
+  display:flex; gap:18px; align-items:center; margin-top: 36px;
+  padding-top:22px; border-top: 1px solid var(--line);
+}
+.test .who .av{
+  width:54px; height:54px; border-radius:50%; flex:none;
+  background: linear-gradient(135deg,#c8a37c,#6c7a5b);
+}
+.test .who b{font-family:var(--display); font-size:22px; font-weight:400; display:block; line-height:1.1; letter-spacing:.02em;}
+.test .who small{font-family:var(--sans); font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-soft);}
+.test .controls{display:flex; gap:10px; margin-top: 28px;}
+.test .dot{
+  width:36px; height:4px; border-radius:2px; background:var(--line-2); cursor:pointer; border:0;
+  transition: background .25s ease;
+}
+.test .dot.active{background:var(--ink);}
+
+/* ─────────────────────── BOOKING ─────────────────────── */
+.book{
+  padding: clamp(70px,9vw,140px) 0;
+  position:relative;
+}
+.book .grid{
+  display:grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 5vw, 80px); align-items:start;
+}
+.book h2{font-size: clamp(46px, 6vw, 88px); line-height:.95; letter-spacing:-.01em; margin: 20px 0 22px;}
+.book h2 .it{color: var(--sage-2);}
+.book .info{font-family:var(--sans); font-size:16px; line-height:1.7; color:var(--ink-soft); max-width: 44ch;}
+.book .why{display:grid; gap: 14px; margin: 28px 0 36px;}
+.book .why li{
+  list-style:none; display:flex; gap:14px; align-items:flex-start;
+  font-family:var(--sans); font-size:14.5px; color:var(--ink); line-height:1.5;
+}
+.book .why li svg{flex:none; width:20px; height:20px; color:var(--sage-2); margin-top:2px;}
+.book .contact-quick{
+  display:flex; gap: 22px; align-items:center; flex-wrap:wrap;
+  padding: 20px 24px; border:1px solid var(--line); border-radius: 18px; background: var(--cream);
+}
+.book .contact-quick .av{
+  width:54px; height:54px; border-radius:50%;
+  background: radial-gradient(circle at 35% 35%, #f0e0c9, #b89070 50%, #5a4631 100%);
+  flex:none;
+}
+.book .contact-quick b{font-family:var(--display); font-size:20px; font-weight:400; letter-spacing:.02em; display:block; line-height:1.2;}
+.book .contact-quick small{font-family:var(--sans); font-size:12px; letter-spacing:.16em; color:var(--ink-soft); text-transform:uppercase;}
+.book .contact-quick a{
+  margin-left:auto; font-family:var(--sans); font-size:11px; letter-spacing:.24em; text-transform:uppercase;
+  padding:12px 18px; background:var(--ink); color:var(--cream); border-radius:999px;
+  transition: background .3s;
+}
+.book .contact-quick a:hover{background: var(--terra);}
+
+/* form card */
+.form-card{
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: clamp(24px, 3vw, 36px);
+  box-shadow: 0 30px 60px -36px rgba(42,31,24,.25);
+}
+.form-card .top{
+  display:flex; justify-content:space-between; align-items:start; gap:14px;
+  padding-bottom: 18px; border-bottom: 1px solid var(--line);
+  margin-bottom: 24px;
+}
+.form-card .top h3{
+  font-family:var(--display); font-size: 28px; font-weight:400; letter-spacing:.02em; line-height:1.1;
+}
+.form-card .top h3 .it{display:block; color:var(--terra); font-size:.65em;}
+.form-card .top .step{
+  font-family:var(--sans); font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-soft);
+  text-align:right;
+}
+.form-card .top .step b{display:block; color:var(--ink); font-family:var(--display); font-size:24px; font-weight:400; letter-spacing:0; margin-top:2px;}
+
+.fields{display:grid; grid-template-columns: 1fr 1fr; gap: 14px 18px;}
+.field{display:flex; flex-direction:column; gap:6px;}
+.field.full{grid-column: 1 / -1;}
+.field label{font-family:var(--sans); font-size:10.5px; letter-spacing:.26em; text-transform:uppercase; color:var(--ink-soft);}
+.field input, .field select, .field textarea{
+  font-family:var(--display); font-size: 18px;
+  background: transparent; color:var(--ink);
+  border: 0; border-bottom: 1px solid var(--line-2);
+  padding: 10px 0 10px; outline:none;
+  width:100%;
+  transition: border-color .3s;
+  letter-spacing: .01em;
+}
+.field input::placeholder, .field textarea::placeholder{color:rgba(42,31,24,.35);}
+.field textarea{font-family:var(--sans); font-size: 15px; resize:vertical; min-height: 70px;}
+.field select{
+  appearance:none; -webkit-appearance:none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--ink) 50%),
+    linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+  background-position: calc(100% - 12px) 18px, calc(100% - 7px) 18px;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 26px;
+}
+.field input:focus, .field select:focus, .field textarea:focus{border-color: var(--ink);}
+.field .err{font-family:var(--sans); font-size:10.5px; letter-spacing:.16em; color: var(--terra-2); text-transform:uppercase; min-height: 12px; margin-top: 2px;}
+
+.chips{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;}
+.chip{
+  padding: 9px 14px; border-radius: 999px;
+  font-family:var(--sans); font-size:12px; letter-spacing:.18em; text-transform:uppercase;
+  border:1px solid var(--line-2); color:var(--ink); background: transparent; cursor:pointer;
+  transition: background .25s, color .25s, border-color .25s;
+}
+.chip:hover{border-color: var(--ink);}
+.chip.active{background: var(--ink); color: var(--cream); border-color: var(--ink);}
+
+.submit-row{
+  margin-top: 22px; display:flex; gap:16px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+}
+.submit-row .legal{font-family:var(--sans); font-size:11px; letter-spacing:.06em; color:var(--ink-soft); max-width: 28ch;}
+.submit-row .legal a{text-decoration:underline; text-underline-offset: 3px;}
+.btn-submit{
+  display:inline-flex; align-items:center; gap:14px;
+  background:var(--ink); color:var(--cream);
+  padding: 18px 28px; border-radius:999px;
+  font-family:var(--sans); font-weight:500; font-size:12px; letter-spacing:.26em; text-transform:uppercase;
+  transition: background .3s, transform .3s;
+}
+.btn-submit:hover{background: var(--terra-2); transform: translateY(-2px);}
+
+.success-box{display:none; text-align:center; padding: 20px 6px;}
+.success-box.show{display:block; animation: fade .5s ease;}
+.success-box .seal{
+  width: 76px; height:76px; border-radius:50%;
+  background: var(--sage); color:var(--cream);
+  display:grid; place-items:center;
+  margin: 8px auto 18px;
+  font-family:var(--display); font-size: 36px;
+  border:1px solid var(--ink);
+}
+.success-box h3{font-family:var(--display); font-size: 36px; font-weight:400; color:var(--ink); letter-spacing:.02em;}
+.success-box p{font-family:var(--sans); font-size:15px; color:var(--ink-soft); margin: 10px auto 0; max-width: 36ch; line-height:1.6;}
+
+@media (max-width: 880px){
+  .book .grid{grid-template-columns: 1fr;}
+  .fields{grid-template-columns: 1fr;}
+}
+
+/* ─────────────────────── CONTACTS / MAP ────────────── */
+.contacts{padding: clamp(70px, 9vw, 130px) 0; background: var(--bg-2); border-top:1px solid var(--line);}
+.contacts .grid{
+  display:grid; grid-template-columns: 1fr 1.1fr; gap: clamp(30px, 5vw, 80px); align-items:stretch;
+}
+.contacts h2{font-size: clamp(40px, 5.4vw, 76px); line-height:.95; letter-spacing:-.01em; margin: 18px 0 28px;}
+.contacts h2 .it{color: var(--terra);}
+.contacts .cols{display:grid; grid-template-columns: 1fr 1fr; gap: 28px 36px; margin-top: 20px;}
+.contacts .col h4{
+  font-family:var(--sans); font-size:10.5px; letter-spacing:.28em; text-transform:uppercase; font-weight:500;
+  color:var(--sage-2); margin-bottom:10px;
+}
+.contacts .col p, .contacts .col a, .contacts .col li{
+  font-family:var(--display); font-size: 22px; font-weight:400; color: var(--ink); line-height:1.4; letter-spacing:.02em;
+}
+.contacts .col li{list-style:none;}
+.contacts .col a:hover{color: var(--terra);}
+.contacts .col .hours{display:grid; gap:6px;}
+.contacts .col .hours .row{display:flex; justify-content:space-between; gap:14px;}
+.contacts .col .hours small{font-family:var(--sans); font-size:13px; letter-spacing:0; text-transform:none; color: var(--ink-soft);}
+.contacts .sm{font-family:var(--sans); font-size:13px; color:var(--ink-soft); letter-spacing:0; text-transform:none; margin-top:6px;}
+
+.mapcard{
+  position:relative;
+  background: var(--cream); border:1px solid var(--line); border-radius: var(--radius-lg);
+  overflow:hidden;
+  display:flex; flex-direction:column;
+}
+.mapviz{
+  position:relative;
+  aspect-ratio: 5/4;
+  background:
+    radial-gradient(120% 80% at 30% 40%, #e6dec6 0%, #d3c7a8 40%, #b2a785 100%);
+  overflow:hidden;
+}
+.mapviz svg{position:absolute; inset:0; width:100%; height:100%;}
+.mapviz .pin{
+  position:absolute; left:55%; top:48%;
+  width: 20px; height:20px; transform:translate(-50%,-100%);
+  z-index:3;
+}
+.mapviz .pin::before{
+  content:""; position:absolute; left:50%; top:0; transform:translateX(-50%);
+  width: 20px; height:20px; border-radius:50%;
+  background: var(--terra); border: 3px solid var(--cream);
+  box-shadow: 0 8px 16px rgba(184,104,72,.45);
+}
+.mapviz .pin::after{
+  content:""; position:absolute; left:50%; top:14px; transform:translateX(-50%);
+  width: 0; height:0;
+  border-left:6px solid transparent; border-right:6px solid transparent;
+  border-top: 9px solid var(--terra);
+}
+.mapviz .pulse{
+  position:absolute; left:55%; top:48%;
+  width: 40px; height:40px; transform:translate(-50%,-50%);
+  border-radius:50%; background: var(--terra);
+  opacity:.4;
+  animation: pulse 2.2s infinite;
+}
+@keyframes pulse{
+  0%{transform:translate(-50%,-50%) scale(.4); opacity:.5;}
+  100%{transform:translate(-50%,-50%) scale(2.2); opacity:0;}
+}
+.mapviz .label{
+  position:absolute; left:55%; top:48%;
+  transform: translate(20px, -50%);
+  background: var(--cream); border:1px solid var(--ink);
+  padding: 10px 14px; border-radius: 10px;
+  font-family:var(--sans); font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+  white-space:nowrap;
+  box-shadow: 0 12px 24px rgba(0,0,0,.18);
+}
+.mapviz .label b{display:block; font-family:var(--display); font-size:16px; letter-spacing:.04em; text-transform:none; color:var(--ink);}
+
+.mapcard .below{
+  padding: 22px 24px; display:flex; gap:18px; align-items:center; flex-wrap:wrap;
+  border-top: 1px solid var(--line);
+}
+.mapcard .below b{font-family:var(--display); font-size:20px; font-weight:400; letter-spacing:.02em;}
+.mapcard .below small{display:block; font-family:var(--sans); font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft);}
+.mapcard .below a{
+  margin-left:auto;
+  font-family:var(--sans); font-size:11px; letter-spacing:.24em; text-transform:uppercase;
+  padding: 12px 18px; background: var(--ink); color:var(--cream); border-radius:999px;
+}
+.mapcard .below a:hover{background: var(--sage-2);}
+
+@media (max-width: 880px){
+  .contacts .grid{grid-template-columns: 1fr;}
+}
+
+/* ─────────────────────── FOOTER ──────────────────────── */
+footer{background: var(--ink); color: var(--cream); padding: clamp(50px,6vw,80px) 0 32px;}
+footer .grid{
+  display:grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: clamp(24px, 4vw, 50px);
+  align-items:start; padding-bottom: 40px; border-bottom:1px solid rgba(246,241,232,.15);
+}
+footer h5{font-family:var(--sans); font-size:10.5px; letter-spacing:.28em; text-transform:uppercase; color: rgba(227,214,191,.55); margin-bottom:14px; font-weight:500;}
+footer p, footer a, footer li{font-family:var(--sans); font-size:14.5px; color:rgba(246,241,232,.85); line-height:1.65;}
+footer a:hover{color: var(--terra);}
+footer li{list-style:none;}
+footer .brand-big{
+  font-family:var(--display); font-size: clamp(36px,4vw,52px); letter-spacing:.06em; color: var(--cream);
+  display:flex; align-items:center; gap:14px; margin-bottom:14px;
+}
+footer .brand-big .leaf{width:26px; height:26px; color: var(--terra);}
+footer .lede{font-family:var(--italic); font-style:italic; font-size: 22px; line-height:1.45; color:rgba(246,241,232,.85); max-width: 32ch;}
+footer .mini{margin-top: 22px; padding-top: 22px; border-top: 1px solid rgba(246,241,232,.15); display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap;}
+footer .mini *{font-family:var(--sans); font-size:11px; letter-spacing:.24em; text-transform:uppercase; color: rgba(227,214,191,.55);}
+
+@media (max-width: 880px){footer .grid{grid-template-columns: 1fr 1fr;}}
+@media (max-width: 500px){footer .grid{grid-template-columns: 1fr;}}
+
+/* spark ornaments */
+.spark{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--sans); font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--sage-2);
+}
+.spark::before, .spark::after{content:""; width:24px; height:1px; background:currentColor; opacity:.5;}
+
+/* ──────────────────────────────────────────────
+   MOBILE OPTIMISATIONS
+   ────────────────────────────────────────────── */
+
+/* slightly tighter gutter on phones */
+@media (max-width: 720px){
+  :root{ --gut: 18px; --radius-lg: 22px; --radius: 14px; }
+  body{font-size:15px; line-height:1.55;}
+  .eyebrow{font-size:10px; letter-spacing:.26em;}
+  .eyebrow::before{width:20px;}
+}
+
+/* TOP BAR: hide secondary info on small phones */
+@media (max-width: 720px){
+  .topbar{font-size:10px; letter-spacing:.2em;}
+  .topbar .row{justify-content:center; padding:8px 0;}
+  .topbar .l{display:none;}
+  .topbar .r{justify-content:center; gap:8px !important;}
+  .topbar .r .sep{display:none;}
+}
+
+/* NAV: compress brand */
+@media (max-width: 720px){
+  .nav .row{padding:12px 0; gap:14px;}
+  .brand .mark{font-size:22px; letter-spacing:.1em; gap:7px;}
+  .brand .mark .leaf{width:18px; height:18px;}
+  .brand small{font-size:8px; letter-spacing:.3em;}
+  .nav .right{gap:10px;}
+  .cta{padding:11px 14px; font-size:10px; letter-spacing:.18em;}
+  .cta .dot{width:5px; height:5px;}
+  .burger{width:38px; height:38px;}
+}
+@media (max-width: 380px){
+  .nav .right .cta span:not(.dot){display:none;}
+  .cta{padding:11px 13px;}
+}
+
+/* MOBILE MENU */
+@media (max-width: 720px){
+  .mmenu{padding-top:72px;}
+  .mmenu a{font-size:28px; padding:12px 0;}
+}
+
+/* HERO */
+@media (max-width: 720px){
+  .hero{padding: 28px 0 50px;}
+  .hero .grid{gap:32px;}
+  .hero h1{font-size: clamp(48px, 14vw, 82px); line-height:.92; margin: 14px 0 14px;}
+  .hero h1 .it{font-size:.65em;}
+  .hero .lede{font-size:15px; line-height:1.6; margin-bottom:24px;}
+  .hero .actions{gap:10px; flex-direction:column; align-items:stretch;}
+  .hero .actions .btn-primary{justify-content:center; padding:16px 22px; font-size:11.5px; border-radius: 999px;}
+  .hero .actions .btn-ghost{
+    text-align:center; justify-content:center; padding:14px 16px;
+    border:1px solid var(--ink); border-bottom:1px solid var(--ink); border-radius:999px;
+  }
+  .hero .meta{gap:22px; margin-top:34px; padding-top:22px;}
+  .hero .meta .m{flex:1 1 30%;}
+  .hero .meta .m b{font-size:22px;}
+  .hero .meta .m small{font-size:10px; letter-spacing:.18em;}
+
+  .hero .imgwrap{aspect-ratio: 4/5; margin-top:8px;}
+  .hero .badge{
+    width:78px; height:78px; right:10px; top:10px; left:auto;
+    padding:6px;
+  }
+  .hero .badge .center{font-size:17px;}
+  .hero .badge svg text{font-size:10px;}
+
+  .hero .float-card{
+    right:auto; left:12px; transform:none;
+    bottom:12px; top:auto;
+    max-width: calc(100% - 24px);
+    padding:11px 14px;
+    border-radius: 12px;
+  }
+  .hero .float-card .av{width:30px; height:30px;}
+  .hero .float-card .t{font-size:11px; line-height:1.3;}
+  .hero .float-card .t b{font-size:13.5px;}
+  .hero .float-card .t small{font-size:9px;}
+}
+
+/* TRUST STRIP */
+@media (max-width: 720px){
+  .trust{padding: 26px 0;}
+  .trust .row{flex-direction:column; gap:18px; align-items:stretch;}
+  .trust .item{gap:12px;}
+  .trust .item .ic{width:36px; height:36px;}
+  .trust .item .t{font-size:11px;}
+  .trust .item .t b{font-size:15px;}
+}
+
+/* FEATURED SERVICES */
+@media (max-width: 720px){
+  .featured{padding: 60px 0;}
+  .featured h2{font-size: clamp(36px, 10vw, 56px);}
+  .featured .head{margin-bottom: 28px;}
+  .featured .head .nav-btns{display:none;}
+  .scroller{
+    grid-auto-columns: 78vw;
+    gap: 14px;
+    padding-left: var(--gut);
+    margin-left: calc(-1 * var(--gut));
+    padding-right: var(--gut);
+    margin-right: calc(-1 * var(--gut));
+  }
+  .s-card .photo{height: 240px;}
+  .s-card .body{padding:18px 18px 20px;}
+  .s-card h3{font-size:24px;}
+  .s-card p{font-size:13px;}
+  .s-card .foot .pr{font-size:20px;}
+}
+
+/* PHILOSOPHY */
+@media (max-width: 720px){
+  .philo{padding: 60px 0;}
+  .philo .grid{gap:36px;}
+  .philo h2{font-size: clamp(34px, 8.4vw, 52px); margin: 16px 0 18px;}
+  .philo .body{font-size:15px; line-height:1.65;}
+  .philo .pills{gap:8px;}
+  .philo .pills span{font-size:10.5px; padding:7px 12px;}
+  .philo .imgwrap .stat{
+    left:14px; transform:none; right:auto; bottom:14px; padding:14px 18px;
+    max-width: calc(100% - 28px);
+  }
+  .philo .imgwrap .stat b{font-size:30px;}
+  .philo .imgwrap .stat small{font-size:10px;}
+  .philo .signature{margin-top:30px; padding-top:20px;}
+  .philo .signature .av{width:46px; height:46px;}
+}
+
+/* SERVICES (tabs + price list) */
+@media (max-width: 720px){
+  .svc{padding: 60px 0;}
+  .svc h2{font-size: clamp(36px, 9vw, 56px);}
+  .svc .sub{font-size:14px; line-height:1.6;}
+  /* horizontal-scroll tab bar (no awkward wrap) */
+  .tabs{
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    scrollbar-width:none;
+    padding-bottom: 14px;
+    margin-bottom: 26px;
+    gap: 6px;
+    /* let it bleed to edges */
+    padding-left: var(--gut);
+    margin-left: calc(-1 * var(--gut));
+    padding-right: var(--gut);
+    margin-right: calc(-1 * var(--gut));
+  }
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab{
+    flex:none; white-space:nowrap;
+    padding:10px 14px; font-size:11px; letter-spacing:.18em;
+  }
+  .tab .n{font-size:12px;}
+  .panel{gap: 28px;}
+  .panel .left .photo{aspect-ratio: 4/3;}
+  .panel .left .caption{font-size:18px; margin-top:14px;}
+  .price-list .it{padding: 14px 0; gap:16px;}
+  .price-list .it:hover{padding-left:0;}
+  .price-list .it .name{font-size: 17px; line-height:1.25;}
+  .price-list .it .desc{font-size:12.5px;}
+  .price-list .it .price{font-size: 19px;}
+  .price-list .it .price small{font-size:10px; letter-spacing:.18em;}
+}
+
+/* MASTERS */
+@media (max-width: 720px){
+  .masters{padding: 60px 0;}
+  .masters h2{font-size: clamp(36px, 9vw, 56px); margin: 16px 0 32px;}
+  .m-grid{gap: 18px;}
+  .m-card .photo{aspect-ratio: 4/4.4;}
+  .m-card .body{padding:18px 18px 20px;}
+  .m-card .nm{font-size:26px;}
+  .m-card .role{font-size:10px;}
+  .m-card .yrs{font-size:11px; gap:10px;}
+}
+
+/* GALLERY */
+@media (max-width: 720px){
+  .gal{padding: 60px 0;}
+  .gal h2{font-size: clamp(34px, 9vw, 56px);}
+  .gal-grid{grid-auto-rows: 130px; gap: 10px;}
+  .gal-grid .photo{border-radius:10px;}
+  .gal-grid .photo img{border-radius:10px;}
+  .gal .insta{font-size:11px; letter-spacing:.2em;}
+}
+
+/* TESTIMONIAL */
+@media (max-width: 720px){
+  .test{padding: 56px 0;}
+  .test q{font-size: clamp(22px, 6.4vw, 30px); line-height:1.3;}
+  .test .who{margin-top:28px; padding-top:18px; gap:14px;}
+  .test .who .av{width:46px; height:46px;}
+  .test .who b{font-size:19px;}
+}
+
+/* BOOKING */
+@media (max-width: 720px){
+  .book{padding: 60px 0;}
+  .book h2{font-size: clamp(36px, 9vw, 60px); margin:16px 0 18px;}
+  .book .info{font-size:15px; line-height:1.65;}
+  .book .why li{font-size:14px;}
+  .book .why li svg{width:18px; height:18px;}
+
+  .book .contact-quick{
+    padding:16px 18px; gap:14px;
+  }
+  .book .contact-quick .av{width:46px; height:46px;}
+  .book .contact-quick b{font-size:17px;}
+  .book .contact-quick small{font-size:11px;}
+  .book .contact-quick a{
+    margin-left:0; width:100%; text-align:center; padding:13px 16px; font-size:11px;
+  }
+
+  .form-card{padding: 22px;}
+  .form-card .top{padding-bottom:14px; margin-bottom:18px;}
+  .form-card .top h3{font-size:22px;}
+  .form-card .top .step{font-size:10px;}
+  .form-card .top .step b{font-size:20px;}
+  .fields{gap:12px 14px;}
+  .field input, .field select, .field textarea{font-size:16px; padding:9px 0;} /* 16px to avoid iOS zoom */
+  .field textarea{font-size:15px;}
+  .chips{gap:6px;}
+  .chip{padding:8px 12px; font-size:11px; letter-spacing:.14em;}
+
+  .submit-row{flex-direction:column; align-items:stretch; gap:14px; margin-top:18px;}
+  .submit-row .legal{max-width:none; text-align:center; font-size:11px;}
+  .btn-submit{justify-content:center; padding:16px 22px; font-size:11.5px;}
+
+  .success-box .seal{width:64px; height:64px; font-size:30px;}
+  .success-box h3{font-size:28px;}
+  .success-box p{font-size:14px;}
+}
+
+/* CONTACTS / MAP */
+@media (max-width: 720px){
+  .contacts{padding: 60px 0;}
+  .contacts h2{font-size: clamp(32px, 8.6vw, 52px); margin: 16px 0 22px;}
+  .contacts .cols{grid-template-columns: 1fr 1fr; gap: 22px 22px;}
+  .contacts .col h4{font-size:10px;}
+  .contacts .col p, .contacts .col a, .contacts .col li{font-size: 17px;}
+  .contacts .col .hours small{font-size:12px;}
+  .mapviz{aspect-ratio: 4/3;}
+  .mapviz .label{
+    transform: translate(-50%, 30px); left:50%; top:auto; bottom:14px;
+    padding: 8px 12px; font-size:10px;
+  }
+  .mapviz .label b{font-size:14px;}
+  .mapcard .below{padding:18px 18px;}
+  .mapcard .below b{font-size:17px;}
+  .mapcard .below small{font-size:11px;}
+  .mapcard .below a{
+    margin-left:0; width:100%; text-align:center; padding:13px 16px; font-size:11px;
+  }
+}
+@media (max-width: 420px){
+  .contacts .cols{grid-template-columns: 1fr;}
+}
+
+/* FOOTER */
+@media (max-width: 720px){
+  footer{padding: 50px 0 28px;}
+  footer .grid{gap: 28px; padding-bottom: 30px;}
+  footer .brand-big{font-size: 32px; letter-spacing:.05em;}
+  footer .brand-big .leaf{width:22px; height:22px;}
+  footer .lede{font-size:18px;}
+  footer h5{margin-bottom:10px;}
+  footer p, footer a, footer li{font-size: 14px;}
+  footer .mini{flex-direction:column; gap:8px; margin-top:18px; padding-top:18px; text-align:center; align-items:center;}
+  footer .mini *{font-size:10px; letter-spacing:.2em;}
+}
+
+/* iOS input zoom kill */
+@media (max-width: 720px){
+  input[type="date"], input[type="tel"], input[type="text"], select, textarea{
+    font-size:16px !important;
+  }
+}
+
+/* ─────────── STICKY MOBILE CTA BAR ─────────── */
+.mcta{display:none;}
+@media (max-width: 720px){
+  body{padding-bottom: 72px;}
+  .mcta{
+    display:flex;
+    position:fixed; left:10px; right:10px; bottom: max(10px, env(safe-area-inset-bottom));
+    z-index: 70;
+    background: var(--ink); color: var(--cream);
+    border-radius: 999px;
+    padding: 10px 12px 10px 16px;
+    align-items:center; gap: 10px;
+    box-shadow: 0 18px 40px -16px rgba(42,31,24,.55), 0 0 0 1px rgba(255,255,255,.05) inset;
+    transition: opacity .35s ease, transform .35s ease;
+  }
+  .mcta .dot{width:7px; height:7px; border-radius:50%; background: var(--terra); flex:none; box-shadow: 0 0 0 4px rgba(184,104,72,.2);}
+  .mcta .label{
+    flex:1; font-family:var(--sans); font-size:12.5px; line-height:1.2;
+    display:flex; flex-direction:column; gap:1px;
+  }
+  .mcta .label small{font-family:var(--sans); font-size:9.5px; letter-spacing:.22em; text-transform:uppercase; color: rgba(246,241,232,.65);}
+  .mcta .label b{font-family:var(--display); font-size:15px; font-weight:400; letter-spacing:.03em; color: var(--cream);}
+  .mcta .phone{
+    width:38px; height:38px; border-radius:50%;
+    background: rgba(246,241,232,.1);
+    display:grid; place-items:center;
+    flex:none;
+  }
+  .mcta .phone svg{width:16px; height:16px;}
+  .mcta .book{
+    display:inline-flex; align-items:center; gap:8px;
+    background: var(--terra); color: var(--cream);
+    padding: 10px 16px; border-radius: 999px;
+    font-family:var(--sans); font-weight:500; font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+  }
+  .mcta.hide{opacity:0; pointer-events:none; transform: translateY(20px);}
+}
+
+</style>
+</head>
+<body>
+
+<!-- ─────────── TOP BAR ─────────── -->
+<div class="topbar">
+  <div class="wrap row">
+    <div class="l">
+      <span>Запоріжжя · пр. Соборний 152</span>
+      <span class="sep">·</span>
+      <span>9:00 — 21:00</span>
+    </div>
+    <div class="r" style="display:flex; gap:14px; align-items:center;">
+      <a href="tel:+380671234567">+38 (067) 123 45 67</a>
+      <span class="sep">·</span>
+      <a href="https://www.instagram.com/beautystudio.hollywood.zp/" target="_blank" rel="noopener">@beautystudio.hollywood.zp</a>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────── NAV ─────────── -->
+<header class="nav">
+  <div class="wrap row">
+    <div class="left">
+      <a href="#services" class="link">Послуги</a>
+      <a href="#philo" class="link">Про студію</a>
+      <a href="#masters" class="link">Майстри</a>
+      <a href="#gallery" class="link">Галерея</a>
+    </div>
+    <a href="#top" class="brand" aria-label="Beauty Studio Hollywood">
+      <span class="mark">
+        <svg class="leaf" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 22C12 12 4 6 4 4c2 0 8 1 12 8 4-7 10-8 12-8 0 2-8 8-8 18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" transform="translate(-2,0)"/>
+          <path d="M12 22V8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        HOLLYWOOD
+      </span>
+      <small>Beauty Studio · Zaporizhzhia</small>
+    </a>
+    <div class="right">
+      <a href="#contacts" class="link">Контакти</a>
+      <a href="#book" class="cta">
+        <span class="dot"></span>
+        Записатись
+      </a>
+      <button class="burger" id="burger" aria-label="Меню"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<nav class="mmenu" id="mmenu" aria-hidden="true">
+  <button class="close" id="mclose" aria-label="Закрити"></button>
+  <a href="#services">Послуги</a>
+  <a href="#philo">Про студію</a>
+  <a href="#masters">Майстри</a>
+  <a href="#gallery">Галерея</a>
+  <a href="#contacts">Контакти</a>
+  <a href="#book">Записатись</a>
+</nav>
+
+<!-- ─────────── HERO ─────────── -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="grid">
+
+      <div class="copy">
+        <span class="eyebrow reveal">Естетика · догляд · Запоріжжя</span>
+        <h1 class="reveal d1">
+          Краса,<br/>
+          що&nbsp;<span class="it">дихає</span>.
+        </h1>
+        <p class="lede reveal d2">
+          Hollywood — авторський салон, де&nbsp;догляд стає тихим ритуалом.
+          М’яке світло, природні аромати, бездоганна форма&nbsp;— все, аби&nbsp;ви
+          вийшли звідси легшою, ніж зайшли.
+        </p>
+        <div class="actions reveal d3">
+          <a href="#book" class="btn-primary">
+            Забронювати візит
+            <span class="arrow"></span>
+          </a>
+          <a href="#services" class="btn-ghost">Послуги &amp; ціни</a>
+        </div>
+
+        <div class="meta reveal d4">
+          <div class="m"><b>8&nbsp;років</b><small>авторської практики</small></div>
+          <div class="m"><b>12&nbsp;000+</b><small>гостей у&nbsp;кріслі</small></div>
+          <div class="m"><b>4.97&nbsp;★</b><small>Google · 380&nbsp;відгуків</small></div>
+        </div>
+      </div>
+
+      <div class="imgwrap reveal d2">
+
+        <!-- circular badge -->
+        <div class="badge" aria-hidden="true">
+          <svg viewBox="0 0 130 130">
+            <defs>
+              <path id="circ" d="M 65,65 m -52,0 a 52,52 0 1,1 104,0 a 52,52 0 1,1 -104,0" fill="none"/>
+            </defs>
+            <text fill="currentColor" font-family="Jost" font-size="9.5" letter-spacing="3">
+              <textPath href="#circ">★ авторський салон · з 2018 року · Запоріжжя · ★ авторський салон · з 2018 ·</textPath>
+            </text>
+          </svg>
+          <span class="center it">est.<br/>2018</span>
+        </div>
+
+        <div class="photo">
+          <img alt="Догляд за обличчям у студії Hollywood"
+               src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=1200&q=80&auto=format&fit=crop"
+               onerror="this.style.display='none'"
+               loading="eager" />
+          <span class="tag">Сеанс №&nbsp;142 · Обличчя</span>
+        </div>
+
+        <!-- floating availability card -->
+        <div class="float-card">
+          <div class="av"></div>
+          <div class="t">
+            <small>Вільно сьогодні</small>
+            <b>3 сеанси</b>
+            14:30 · 16:00 · 19:30
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── TRUST STRIP ─────────── -->
+<section class="trust" aria-label="Переваги">
+  <div class="wrap row">
+    <div class="item">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.35-7-10a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.65-7 10-7 10z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="t"><b>Ваш майстер</b>назавжди, без ротацій</span>
+    </div>
+    <div class="item">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2v20M2 12h20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.4"/></svg></span>
+      <span class="t"><b>Лише сертифікована</b>професійна косметика</span>
+    </div>
+    <div class="item">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+      <span class="t"><b>Запис без черг</b>· точність до хвилини</span>
+    </div>
+    <div class="item">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l2.6 5.6 6.2.9-4.5 4.3 1.1 6.1L12 17l-5.4 2.9 1.1-6.1-4.5-4.3 6.2-.9L12 3z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
+      <span class="t"><b>4.97 з 5</b>· 380+ відгуків Google</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── FEATURED SERVICES ─────────── -->
+<section class="featured" id="featured">
+  <div class="wrap">
+    <div class="head">
+      <div class="reveal">
+        <span class="eyebrow">Найчастіше обирають</span>
+        <h2>Послуги, що&nbsp;стали<br/><span class="it">ритуалами</span>.</h2>
+      </div>
+      <div class="nav-btns reveal d2">
+        <button class="nav-btn" id="prev" aria-label="Попередня"><svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="nav-btn" id="next" aria-label="Наступна"><svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+    </div>
+
+    <div class="scroller reveal d1" id="scroller">
+
+      <article class="s-card">
+        <div class="photo" style="background: radial-gradient(120% 80% at 30% 30%, #f3d6c0, #c98b6e 60%, #6d3d2a 100%);">
+          <img alt="Манікюр" loading="lazy"
+               src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=900&q=80&auto=format&fit=crop"
+               onerror="this.style.display='none'"/>
+          <span class="tag">Манікюр</span>
+        </div>
+        <div class="body">
+          <span class="label">Догляд за руками</span>
+          <h3>Манікюр &amp; гель-лак</h3>
+          <p>Апаратна обробка, форма, покриття, що&nbsp;тримається три тижні. Обережно та&nbsp;чисто.</p>
+          <div class="foot">
+            <div class="pr">від&nbsp;750&nbsp;<small>₴</small></div>
+            <a href="#services" class="go">Детальніше →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="s-card">
+        <div class="photo" style="background: radial-gradient(120% 80% at 30% 30%, #e8cba8, #a37a55 60%, #4a3322 100%);">
+          <img alt="Волосся" loading="lazy"
+               src="https://images.unsplash.com/photo-1560869713-7d0a29430803?w=900&q=80&auto=format&fit=crop"
+               onerror="this.style.display='none'"/>
+          <span class="tag">Волосся</span>
+        </div>
+        <div class="body">
+          <span class="label">Стиль &amp; колір</span>
+          <h3>Стрижка &amp; укладка</h3>
+          <p>Підбираємо форму під рисами обличчя. Жодних шаблонів — лише ваш силует і характер.</p>
+          <div class="foot">
+            <div class="pr">від&nbsp;900&nbsp;<small>₴</small></div>
+            <a href="#services" class="go">Детальніше →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="s-card">
+        <div class="photo" style="background: radial-gradient(120% 80% at 30% 30%, #f1dcc6, #b88c66 60%, #533a26 100%);">
+          <img alt="Брови та вії" loading="lazy"
+               src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=900&q=80&auto=format&fit=crop"
+               onerror="this.style.display='none'"/>
+          <span class="tag">Брови · вії</span>
+        </div>
+        <div class="body">
+          <span class="label">Архітектура погляду</span>
+          <h3>Ламінація &amp; форма</h3>
+          <p>Кератинова ламінація без зайвої жорсткості. Архітектура брів під вашу форму обличчя.</p>
+          <div class="foot">
+            <div class="pr">від&nbsp;550&nbsp;<small>₴</small></div>
+            <a href="#services" class="go">Детальніше →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="s-card">
+        <div class="photo" style="background: radial-gradient(120% 80% at 30% 30%, #efe4d2, #b09a78 60%, #4a3c2a 100%);">
+          <img alt="Косметологія" loading="lazy"
+               src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=900&q=80&auto=format&fit=crop"
+               onerror="this.style.display='none'"/>
+          <span class="tag">Косметологія</span>
+        </div>
+        <div class="body">
+          <span class="label">Догляд за обличчям</span>
+          <h3>Чистка &amp; пілінги</h3>
+          <p>Ультразвук, мигдальний та&nbsp;ретиноєвий пілінги, доглядові протоколи з&nbsp;ароматерапією.</p>
+          <div class="foot">
+            <div class="pr">від&nbsp;1&nbsp;400&nbsp;<small>₴</small></div>
+            <a href="#services" class="go">Детальніше →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="s-card">
+        <div class="photo" style="background: radial-gradient(120% 80% at 30% 30%, #ebc9b0, #a76e54 60%, #4a2818 100%);">
+          <img alt="Перманент" loading="lazy"
+               src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=900&q=80&auto=format&fit=crop"
+               onerror="this.style.display='none'"/>
+          <span class="tag">Перманент</span>
+        </div>
+        <div class="body">
+          <span class="label">Перманентний макіяж</span>
+          <h3>Брови, стрілка, губи</h3>
+          <p>Тонко, природно, по&nbsp;шкірі. Корекція через 30&nbsp;днів уже&nbsp;входить у&nbsp;вартість.</p>
+          <div class="foot">
+            <div class="pr">від&nbsp;3&nbsp;200&nbsp;<small>₴</small></div>
+            <a href="#services" class="go">Детальніше →</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── PHILOSOPHY ─────────── -->
+<section class="philo" id="philo">
+  <div class="wrap">
+    <div class="grid">
+
+      <div class="imgwrap reveal">
+        <div class="photo">
+          <img alt="Інтер’єр студії Hollywood" loading="lazy"
+               src="https://images.unsplash.com/photo-1633681926022-84d9e44b76fc?w=1200&q=80&auto=format&fit=crop"
+               onerror="this.style.display='none'"/>
+        </div>
+        <div class="stat">
+          <div>
+            <b>8</b>
+            <small>років студії</small>
+          </div>
+          <div class="div"></div>
+          <div>
+            <b>14</b>
+            <small>майстрів у&nbsp;команді</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal d2">
+        <span class="eyebrow">Наша філософія</span>
+        <h2>Догляд, у&nbsp;якому ви&nbsp;<span class="it">впізнаєте&nbsp;себе</span>.</h2>
+        <div class="body">
+          <p>Ми&nbsp;відкрилися у&nbsp;2018&nbsp;році з&nbsp;однією думкою: жінка має виходити зі&nbsp;студії
+            не&nbsp;«як з&nbsp;конвеєра», а&nbsp;тихо красивою&nbsp;— ніби це завжди&nbsp;було її&nbsp;власне обличчя,
+            її&nbsp;власне волосся, її&nbsp;власний&nbsp;погляд.</p>
+          <p>Тому ми&nbsp;ніколи не&nbsp;поспішаємо. У&nbsp;нашому розкладі є&nbsp;місце для розмови,
+            кави і&nbsp;того, аби&nbsp;ви&nbsp;побачили себе в&nbsp;дзеркалі без&nbsp;поспіху&nbsp;— і&nbsp;посміхнулись.</p>
+        </div>
+        <div class="pills">
+          <span>Італійські фарби Davines</span>
+          <span>Корейські сироватки</span>
+          <span>Стерильність європейського&nbsp;класу</span>
+          <span>Без агресивних технік</span>
+        </div>
+        <div class="signature">
+          <div class="av" aria-hidden="true"></div>
+          <div class="t">
+            <b>Олена Грицай</b>
+            <small>Засновниця · головна стилістка</small>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── SERVICES (full list with tabs) ─────────── -->
+<section class="svc" id="services">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">Прайс · весна&ndash;літо 2026</span>
+      <h2>Повний перелік<br/><span class="it">послуг&nbsp;студії</span>.</h2>
+      <p class="sub">Усі&nbsp;ціни вказано в&nbsp;гривнях. Кінцева вартість залежить від&nbsp;довжини волосся,
+        складності роботи та&nbsp;матеріалів. Майстер обов’язково озвучить її&nbsp;до&nbsp;початку сеансу.</p>
+    </div>
+
+    <div class="tabs reveal d1" role="tablist">
+      <button class="tab active" data-tab="nails" role="tab" aria-selected="true"><span class="n">01</span> Манікюр &amp; педикюр</button>
+      <button class="tab" data-tab="hair" role="tab"><span class="n">02</span> Волосся</button>
+      <button class="tab" data-tab="brows" role="tab"><span class="n">03</span> Брови &amp; вії</button>
+      <button class="tab" data-tab="cosm" role="tab"><span class="n">04</span> Косметологія</button>
+      <button class="tab" data-tab="perm" role="tab"><span class="n">05</span> Перманент</button>
+    </div>
+
+    <!-- NAILS -->
+    <div class="panel active" data-panel="nails">
+      <div class="left reveal">
+        <div class="photo">
+          <img alt="Манікюр у студії" loading="lazy"
+               src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1000&q=80&auto=format&fit=crop"
+               onerror="this.style.display='none'"/>
+        </div>
+        <p class="caption">Чистий апарат, тиха лампа, форма під&nbsp;ваш палець&nbsp;— а&nbsp;не&nbsp;під трендовий референс.”</p>
+      </div>
+      <div class="price-list reveal d2">
+        <div class="it"><div><div class="name">Класичний манікюр</div><div class="desc">з покриттям-базою, корекцією, оливою</div></div><div class="price">650<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Апаратний манікюр + гель-лак</div><div class="desc">найпопулярніша послуга студії</div></div><div class="price">950<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Зміцнення гелем + дизайн</div><div class="desc">до двох пальців з декором — у подарунок</div></div><div class="price">1&nbsp;250<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Зняття попереднього покриття</div><div class="desc">окремою послугою без оновлення</div></div><div class="price">200<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Класичний педикюр</div><div class="desc">з парафінотерапією і масажем стоп</div></div><div class="price">1&nbsp;100<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Комбі-педикюр + покриття</div><div class="desc">найдовший і найніжніший сеанс</div></div><div class="price">1&nbsp;450<small>₴</small></div></div>
+      </div>
+    </div>
+
+    <!-- HAIR -->
+    <div class="panel" data-panel="hair">
+      <div class="left">
+        <div class="photo">
+          <img alt="Стрижка у студії" loading="lazy"
+               src="https://images.unsplash.com/photo-1560869713-7d0a29430803?w=1000&q=80&auto=format&fit=crop"
+               onerror="this.style.display='none'"/>
+        </div>
+        <p class="caption">Спочатку розмова, потім дзеркало, тоді ножиці. Жодна стрижка не&nbsp;починається з&nbsp;ножиць.”</p>
+      </div>
+      <div class="price-list">
+        <div class="it"><div><div class="name">Жіноча стрижка + укладка</div><div class="desc">консультація і форма під структуру волосся</div></div><div class="price">900<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Чоловіча стрижка</div><div class="desc">машинка + ножиці, оформлення бороди — окремо</div></div><div class="price">500<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Дитяча стрижка</div><div class="desc">до 12 років, із маленьким подарунком</div></div><div class="price">400<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Фарбування одним тоном</div><div class="desc">фарби Davines, Wella, Estel</div></div><div class="price">1&nbsp;600<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Складне фарбування · AirTouch / шатуш</div><div class="desc">авторська техніка студії</div></div><div class="price">3&nbsp;800<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Ботокс / нанопластика волосся</div><div class="desc">відновлення довжини</div></div><div class="price">2&nbsp;400<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Весільна / вечірня укладка</div><div class="desc">з виїздом — за домовленістю</div></div><div class="price">1&nbsp;800<small>₴</small></div></div>
+      </div>
+    </div>
+
+    <!-- BROWS -->
+    <div class="panel" data-panel="brows">
+      <div class="left">
+        <div class="photo">
+          <img alt="Брови та вії" loading="lazy"
+               src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=1000&q=80&auto=format&fit=crop"
+               onerror="this.style.display='none'"/>
+        </div>
+        <p class="caption">Природна форма — це не&nbsp;«нічого не&nbsp;робили». Це&nbsp;коли всі&nbsp;роботи&nbsp;— невидимі.”</p>
+      </div>
+      <div class="price-list">
+        <div class="it"><div><div class="name">Архітектура брів + фарбування</div><div class="desc">на вибір — фарба або хна</div></div><div class="price">550<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Ламінація брів</div><div class="desc">три тижні бездоганної форми</div></div><div class="price">700<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Ламінація вій + фарбування</div><div class="desc">ефект «свого, але кращого»</div></div><div class="price">1&nbsp;100<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Нарощення вій · класика</div><div class="desc">м’який ефект «спросоння»</div></div><div class="price">1&nbsp;200<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Нарощення вій · 2D–3D об’єм</div><div class="desc">для червоної доріжки</div></div><div class="price">1&nbsp;500<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Корекція нарощених вій</div><div class="desc">у межах двох тижнів</div></div><div class="price">800<small>₴</small></div></div>
+      </div>
+    </div>
+
+    <!-- COSMETOLOGY -->
+    <div class="panel" data-panel="cosm">
+      <div class="left">
+        <div class="photo">
+          <img alt="Догляд за обличчям" loading="lazy"
+               src="https://images.unsplash.com/photo-1570554886111-e80fcca6a029?w=1000&q=80&auto=format&fit=crop"
+               onerror="this.style.display='none'"/>
+        </div>
+        <p class="caption">Шкіра не любить агресії. Тільки повторюваність, чистоту і&nbsp;уважні руки.”</p>
+      </div>
+      <div class="price-list">
+        <div class="it"><div><div class="name">Експрес-догляд обличчя</div><div class="desc">45 хв — ідеально перед подією</div></div><div class="price">1&nbsp;400<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Глибока чистка + ультразвук</div><div class="desc">авторський протокол студії</div></div><div class="price">2&nbsp;200<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Хімічний пілінг</div><div class="desc">мигдальний, молочний, ретиноєвий</div></div><div class="price">1&nbsp;900<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Альгінатна маска + масаж</div><div class="desc">з ароматерапією на вибір</div></div><div class="price">1&nbsp;200<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Біоревіталізація · консультація</div><div class="desc">препарати — за рекомендацією лікаря</div></div><div class="price">від&nbsp;3&nbsp;500<small>₴</small></div></div>
+      </div>
+    </div>
+
+    <!-- PERMANENT -->
+    <div class="panel" data-panel="perm">
+      <div class="left">
+        <div class="photo">
+          <img alt="Перманентний макіяж" loading="lazy"
+               src="https://images.unsplash.com/photo-1522337094846-8a818192de1f?w=1000&q=80&auto=format&fit=crop"
+               onerror="this.style.display='none'"/>
+        </div>
+        <p class="caption">Перманент має старіти разом з&nbsp;вами&nbsp;— а&nbsp;не&nbsp;окремо від обличчя.”</p>
+      </div>
+      <div class="price-list">
+        <div class="it"><div><div class="name">Брови · пудровий ефект</div><div class="desc">включно з корекцією через 30 днів</div></div><div class="price">3&nbsp;500<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Стрілка / міжвійковий простір</div><div class="desc">природний акцент</div></div><div class="price">3&nbsp;200<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Губи · акварель / контур</div><div class="desc">збагачення кольору</div></div><div class="price">4&nbsp;200<small>₴</small></div></div>
+        <div class="it"><div><div class="name">Видалення лазером</div><div class="desc">старий перманент / мікроблейдинг</div></div><div class="price">900<small>₴</small></div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─────────── MASTERS ─────────── -->
+<section class="masters" id="masters">
+  <div class="wrap">
+    <span class="eyebrow reveal">Команда</span>
+    <h2 class="reveal d1">Майстри, у&nbsp;яких <span class="it">записуються&nbsp;роками</span>.</h2>
+
+    <div class="m-grid">
+
+      <article class="m-card reveal d1">
+        <div class="photo">
+          <img alt="Олена Грицай — засновниця та стилістка" loading="lazy"
+               src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=900&q=80&auto=format&fit=crop"
+               onerror="this.style.display='none'"/>
+        </div>
+        <div class="body">
+          <div class="role">Засновниця · стилістка</div>
+          <h3 class="nm">Олена <span class="it">Грицай</span></h3>
+          <div class="yrs">
+            <span>12 років практики</span>
+            <span class="dot"></span>
+            <span>колорист</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="m-card reveal d2">
+        <div class="photo">
+          <img alt="Соломія Ковальчук — манікюр" loading="lazy"
+               src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=900&q=80&auto=format&fit=crop"
+               onerror="this.style.display='none'"/>
+        </div>
+        <div class="body">
+          <div class="role">Майстриня манікюру</div>
+          <h3 class="nm">Соломія <span class="it">Ковальчук</span></h3>
+          <div class="yrs">
+            <span>7 років</span>
+            <span class="dot"></span>
+            <span>художниця нігтя</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="m-card reveal d3">
+        <div class="photo">
+          <img alt="Дарина Романюк — брови і вії" loading="lazy"
+               src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=900&q=80&auto=format&fit=crop"
+               onerror="this.style.display='none'"/>
+        </div>
+        <div class="body">
+          <div class="role">Брови · вії · перманент</div>
+          <h3 class="nm">Дарина <span class="it">Романюк</span></h3>
+          <div class="yrs">
+            <span>9 років</span>
+            <span class="dot"></span>
+            <span>ламінація &amp; PM</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── GALLERY ─────────── -->
+<section class="gal" id="gallery">
+  <div class="wrap">
+    <div class="head">
+      <div class="reveal">
+        <span class="eyebrow">Хроніка</span>
+        <h2>Тиха галерея <span class="it">наших&nbsp;робіт</span>.</h2>
+      </div>
+      <a class="insta reveal d2" href="https://www.instagram.com/beautystudio.hollywood.zp/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.4"/>
+          <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.4"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+        </svg>
+        @beautystudio.hollywood.zp →
+      </a>
+    </div>
+
+    <div class="gal-grid">
+      <div class="photo a reveal">
+        <img alt="" loading="lazy" src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=900&q=80&auto=format&fit=crop" onerror="this.style.display='none'"/>
+      </div>
+      <div class="photo b reveal d1">
+        <img alt="" loading="lazy" src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=600&q=80&auto=format&fit=crop" onerror="this.style.display='none'"/>
+      </div>
+      <div class="photo c reveal d2">
+        <img alt="" loading="lazy" src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600&q=80&auto=format&fit=crop" onerror="this.style.display='none'"/>
+      </div>
+      <div class="photo d reveal d3">
+        <img alt="" loading="lazy" src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=600&q=80&auto=format&fit=crop" onerror="this.style.display='none'"/>
+      </div>
+      <div class="photo e reveal d1">
+        <img alt="" loading="lazy" src="https://images.unsplash.com/photo-1561049501-e1f96bdd98fd?w=600&q=80&auto=format&fit=crop" onerror="this.style.display='none'"/>
+      </div>
+      <div class="photo f reveal d2">
+        <img alt="" loading="lazy" src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=900&q=80&auto=format&fit=crop" onerror="this.style.display='none'"/>
+      </div>
+      <div class="photo g reveal d3">
+        <img alt="" loading="lazy" src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80&auto=format&fit=crop" onerror="this.style.display='none'"/>
+      </div>
+      <div class="photo h reveal d4">
+        <img alt="" loading="lazy" src="https://images.unsplash.com/photo-1503236823255-94609f598e71?w=600&q=80&auto=format&fit=crop" onerror="this.style.display='none'"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── TESTIMONIALS ─────────── -->
+<section class="test" id="test">
+  <div class="wrap">
+    <span class="eyebrow reveal">Що кажуть гості</span>
+
+    <div class="test-slide active">
+      <q>Прийшла на&nbsp;стрижку — вийшла з&nbsp;відчуттям, що&nbsp;нарешті побачила себе. Дівчата не&nbsp;поспішають, не&nbsp;нав’язують зайвого. Це&nbsp;мій студіо вже три&nbsp;роки.</q>
+      <div class="who">
+        <div class="av"></div>
+        <div><b>Ірина М.</b><small>Гостя з&nbsp;2022 року · Google ★★★★★</small></div>
+      </div>
+    </div>
+
+    <div class="test-slide">
+      <q>Найніжніший манікюр у&nbsp;місті. Соломія тримає форму три&nbsp;тижні стабільно, нігті не&nbsp;ламаються. І&nbsp;завжди&nbsp;тепло.</q>
+      <div class="who">
+        <div class="av"></div>
+        <div><b>Світлана Б.</b><small>Гостя з&nbsp;2020 року · Instagram</small></div>
+      </div>
+    </div>
+
+    <div class="test-slide">
+      <q>Робила перманент брів у&nbsp;Дарини&nbsp;— рік&nbsp;потому виглядає, ніби&nbsp;мої. Жодного «татуажу», як&nbsp;у&nbsp;90-х. Уважно, акуратно, безболісно.</q>
+      <div class="who">
+        <div class="av"></div>
+        <div><b>Тетяна К.</b><small>Гостя з&nbsp;2023 року · Google ★★★★★</small></div>
+      </div>
+    </div>
+
+    <div class="controls" role="tablist" aria-label="Відгуки">
+      <button class="dot active" data-slide="0" aria-label="Відгук 1"></button>
+      <button class="dot" data-slide="1" aria-label="Відгук 2"></button>
+      <button class="dot" data-slide="2" aria-label="Відгук 3"></button>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── BOOKING ─────────── -->
+<section class="book" id="book">
+  <div class="wrap">
+    <div class="grid">
+
+      <div>
+        <span class="eyebrow reveal">Запис</span>
+        <h2 class="reveal d1">Завітайте<br/>на&nbsp;<span class="it">свій&nbsp;ритуал</span>.</h2>
+        <p class="info reveal d2">Заповніть форму — адміністраторка передзвонить упродовж&nbsp;15&nbsp;хвилин,
+          підтвердить час та&nbsp;підбере майстра. Ми&nbsp;не&nbsp;надсилаємо реклами та&nbsp;не&nbsp;тримаємо «листів очікування»:
+          лише ваш звичайний дзвінок-нагадування за&nbsp;день до&nbsp;візиту.</p>
+
+        <ul class="why reveal d3">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4"/><path d="M8 12l3 3 5-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Безкоштовне скасування за&nbsp;3&nbsp;години до&nbsp;сеансу
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4"/><path d="M8 12l3 3 5-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Кава, чай, какао або келих просекко&nbsp;— коштом&nbsp;студії
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4"/><path d="M8 12l3 3 5-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Подарунок при&nbsp;першому візиті&nbsp;— експрес-догляд&nbsp;рук
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4"/><path d="M8 12l3 3 5-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Накопичувальна знижка від&nbsp;5%&nbsp;до&nbsp;15%
+          </li>
+        </ul>
+
+        <div class="contact-quick reveal d4">
+          <div class="av"></div>
+          <div>
+            <b>Адміністраторка Юлія</b>
+            <small>передзвонить за&nbsp;15 хв · 9:00 — 21:00</small>
+          </div>
+          <a href="tel:+380671234567">+38 067 123 45 67</a>
+        </div>
+      </div>
+
+      <form class="form-card reveal d2" id="form" novalidate>
+        <div class="top">
+          <h3>Запис на&nbsp;візит<span class="it">обери&nbsp;послугу</span></h3>
+          <div class="step">
+            крок<b>1 з 1</b>
+          </div>
+        </div>
+
+        <div class="fields">
+          <div class="field full">
+            <label for="f-name">Ваше ім’я</label>
+            <input id="f-name" name="name" type="text" placeholder="Софія" />
+            <div class="err" data-for="name"></div>
+          </div>
+          <div class="field">
+            <label for="f-phone">Телефон</label>
+            <input id="f-phone" name="phone" type="tel" placeholder="+380 ___ ___ __ __" />
+            <div class="err" data-for="phone"></div>
+          </div>
+          <div class="field">
+            <label for="f-master">Майстер</label>
+            <select id="f-master" name="master">
+              <option value="" disabled selected>Будь-який вільний</option>
+              <option>Олена Грицай</option>
+              <option>Соломія Ковальчук</option>
+              <option>Дарина Романюк</option>
+            </select>
+            <div class="err"></div>
+          </div>
+          <div class="field full">
+            <label>Послуга</label>
+            <div class="chips" id="chips">
+              <button type="button" class="chip" data-val="Манікюр &amp; педикюр">Манікюр &amp; педикюр</button>
+              <button type="button" class="chip" data-val="Волосся">Волосся</button>
+              <button type="button" class="chip" data-val="Брови &amp; вії">Брови &amp; вії</button>
+              <button type="button" class="chip" data-val="Косметологія">Косметологія</button>
+              <button type="button" class="chip" data-val="Перманент">Перманент</button>
+              <button type="button" class="chip" data-val="Комплекс">Комплекс</button>
+            </div>
+            <input type="hidden" id="f-service" name="service" />
+            <div class="err" data-for="service"></div>
+          </div>
+          <div class="field">
+            <label for="f-date">Бажана дата</label>
+            <input id="f-date" name="date" type="date" />
+            <div class="err" data-for="date"></div>
+          </div>
+          <div class="field">
+            <label for="f-time">Бажаний час</label>
+            <select id="f-time" name="time">
+              <option value="" disabled selected>Оберіть час</option>
+              <option>10:00</option>
+              <option>12:00</option>
+              <option>14:30</option>
+              <option>17:00</option>
+              <option>19:30</option>
+            </select>
+            <div class="err" data-for="time"></div>
+          </div>
+          <div class="field full">
+            <label for="f-note">Побажання (необов’язково)</label>
+            <textarea id="f-note" name="note" placeholder="Алергії, бажаний результат, побажання щодо кольору…"></textarea>
+          </div>
+        </div>
+
+        <div class="submit-row">
+          <div class="legal">Натискаючи кнопку, ви&nbsp;погоджуєтесь з&nbsp;<a href="#">політикою конфіденційності</a>.</div>
+          <button class="btn-submit" type="submit">
+            Залишити заявку
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="success-box" id="success">
+          <div class="seal">✓</div>
+          <h3>Дякуємо!</h3>
+          <p>Ми&nbsp;отримали ваш запис. Передзвонимо протягом&nbsp;15&nbsp;хвилин, аби&nbsp;підтвердити&nbsp;час.</p>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── CONTACTS / MAP ─────────── -->
+<section class="contacts" id="contacts">
+  <div class="wrap">
+    <div class="grid">
+
+      <div>
+        <span class="eyebrow reveal">Контакти</span>
+        <h2 class="reveal d1">Завітайте до&nbsp;<span class="it">тихого&nbsp;дому</span>&nbsp;Hollywood.</h2>
+
+        <div class="cols">
+          <div class="col reveal d1">
+            <h4>Адреса</h4>
+            <p>м.&nbsp;Запоріжжя<br/>пр.&nbsp;Соборний&nbsp;152, 2&nbsp;поверх</p>
+            <p class="sm">офіс «Sunset Wing» · ліфт ліворуч</p>
+          </div>
+          <div class="col reveal d2">
+            <h4>Зв’язок</h4>
+            <p><a href="tel:+380671234567">+38&nbsp;(067)&nbsp;123&nbsp;45&nbsp;67</a></p>
+            <p><a href="/cdn-cgi/l/email-protection#f59d9099999ab59d9a99998c829a9a91db8f85db8094"><span class="__cf_email__" data-cfemail="076f626b6b68476f686b6b7e70686863297d77297266">[email&#160;protected]</span></a></p>
+            <p><a href="https://www.instagram.com/beautystudio.hollywood.zp/" target="_blank" rel="noopener">@beautystudio.hollywood.zp</a></p>
+          </div>
+          <div class="col reveal d3">
+            <h4>Графік</h4>
+            <div class="hours">
+              <div class="row"><span>Пн&nbsp;– Пт</span><small>9:00 — 21:00</small></div>
+              <div class="row"><span>Субота</span><small>10:00 — 20:00</small></div>
+              <div class="row"><span>Неділя</span><small>11:00 — 18:00</small></div>
+            </div>
+          </div>
+          <div class="col reveal d4">
+            <h4>Як дістатись</h4>
+            <p>Безкоштовна парковка у&nbsp;дворі.</p>
+            <p class="sm">Зупинка тр.&nbsp;«Театральна» — 2&nbsp;хв&nbsp;пішки.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mapcard reveal d2" aria-label="Локація салону">
+        <div class="mapviz">
+          <!-- stylised map background -->
+          <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+              <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="2" r="1" fill="#3a2c20" opacity=".18"/>
+              </pattern>
+            </defs>
+            <rect width="500" height="400" fill="url(#dots)"/>
+            <!-- park area -->
+            <path d="M 0 250 Q 100 220 180 240 T 320 230 T 500 260 L 500 400 L 0 400 Z" fill="#a7b491" opacity=".55"/>
+            <!-- river -->
+            <path d="M -20 300 Q 100 280 200 310 T 400 320 T 540 300 L 540 360 Q 400 360 300 350 T 100 340 T -20 360 Z" fill="#8fa7b8" opacity=".6"/>
+            <!-- roads -->
+            <g stroke="#f0e8d6" stroke-width="6" opacity=".9" fill="none">
+              <path d="M 50 50 L 470 90"/>
+              <path d="M 100 30 L 130 380"/>
+              <path d="M 0 180 L 500 200"/>
+              <path d="M 280 0 L 320 400"/>
+            </g>
+            <g stroke="#f0e8d6" stroke-width="2.5" opacity=".7" fill="none">
+              <path d="M 30 110 L 480 130"/>
+              <path d="M 200 0 L 220 400"/>
+              <path d="M 380 30 L 410 380"/>
+            </g>
+            <!-- blocks -->
+            <g fill="#3a2c20" opacity=".10">
+              <rect x="140" y="60" width="56" height="42"/>
+              <rect x="230" y="50" width="38" height="48"/>
+              <rect x="330" y="105" width="44" height="58"/>
+              <rect x="140" y="148" width="50" height="40"/>
+              <rect x="230" y="148" width="38" height="42"/>
+              <rect x="350" y="220" width="38" height="32"/>
+              <rect x="60" y="220" width="40" height="34"/>
+            </g>
+          </svg>
+          <span class="pulse"></span>
+          <span class="pin"></span>
+          <span class="label"><small>Beauty Studio</small><b>Hollywood</b></span>
+        </div>
+        <div class="below">
+          <div>
+            <b>пр. Соборний 152</b>
+            <small>Запоріжжя · UA</small>
+          </div>
+          <a href="https://maps.google.com/?q=Запоріжжя+проспект+Соборний+152" target="_blank" rel="noopener">Відкрити карту</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── FOOTER ─────────── -->
+<footer>
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <div class="brand-big">
+          <svg class="leaf" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 22C12 12 4 6 4 4c2 0 8 1 12 8 4-7 10-8 12-8 0 2-8 8-8 18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" transform="translate(-2,0)"/>
+            <path d="M12 22V8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          HOLLYWOOD
+        </div>
+        <p class="lede">Тиха краса і&nbsp;уважний догляд — щодня з&nbsp;2018 року у&nbsp;Запоріжжі.</p>
+      </div>
+      <div>
+        <h5>Послуги</h5>
+        <ul>
+          <li><a href="#services">Манікюр &amp; педикюр</a></li>
+          <li><a href="#services">Волосся &amp; колір</a></li>
+          <li><a href="#services">Брови &amp; вії</a></li>
+          <li><a href="#services">Косметологія</a></li>
+          <li><a href="#services">Перманент</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Студія</h5>
+        <ul>
+          <li><a href="#philo">Про нас</a></li>
+          <li><a href="#masters">Майстри</a></li>
+          <li><a href="#gallery">Галерея</a></li>
+          <li><a href="#test">Відгуки</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Контакти</h5>
+        <ul>
+          <li><a href="tel:+380671234567">+38 067 123 45 67</a></li>
+          <li><a href="/cdn-cgi/l/email-protection#9bf3fef7f7f4dbf3f4f7f7e2ecf4f4ffb5e1ebb5eefa"><span class="__cf_email__" data-cfemail="e58d8089898aa58d8a89899c928a8a81cb9f95cb9084">[email&#160;protected]</span></a></li>
+          <li><a href="https://www.instagram.com/beautystudio.hollywood.zp/" target="_blank" rel="noopener">Instagram</a></li>
+          <li>пр. Соборний 152, Запоріжжя</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mini">
+      <span>© MMXXVI · Beauty Studio Hollywood</span>
+      <span>Made in Zaporizhzhia · з любов’ю</span>
+      <span>Слава Україні</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Sticky mobile CTA (mobile only) -->
+<div class="mcta" id="mcta" aria-label="Швидкий запис">
+  <span class="dot" aria-hidden="true"></span>
+  <span class="label">
+    <small>Вільно сьогодні</small>
+    <b>3 сеанси</b>
+  </span>
+  <a href="tel:+380671234567" class="phone" aria-label="Зателефонувати">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13 1.05.37 2.07.72 3.06a2 2 0 0 1-.45 2.11L8.09 10.91a16 16 0 0 0 6 6l2.02-1.29a2 2 0 0 1 2.11-.45c.99.35 2.01.59 3.06.72A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+  <a href="#book" class="book">Записатись</a>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ───────────── REVEAL ───────────── */
+(function(){
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  els.forEach(el => io.observe(el));
+})();
+
+/* ───────────── MOBILE MENU ───────────── */
+(function(){
+  const m = document.getElementById('mmenu');
+  const b = document.getElementById('burger');
+  const c = document.getElementById('mclose');
+  if(!m || !b) return;
+  const close = () => { m.classList.remove('open'); document.body.style.overflow = ''; };
+  b.addEventListener('click', () => { m.classList.add('open'); document.body.style.overflow='hidden'; });
+  if(c) c.addEventListener('click', close);
+  m.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+})();
+
+/* ───────────── SMOOTH SCROLL ───────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', (e) => {
+    const id = a.getAttribute('href');
+    if(id.length < 2) return;
+    const el = document.querySelector(id);
+    if(!el) return;
+    e.preventDefault();
+    const y = el.getBoundingClientRect().top + window.scrollY - 70;
+    window.scrollTo({ top:y, behavior:'smooth' });
+  });
+});
+
+/* ───────────── FEATURED CARD SCROLLER NAV ───────────── */
+(function(){
+  const sc = document.getElementById('scroller');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  if(!sc) return;
+  const step = () => {
+    const c = sc.querySelector('.s-card');
+    return c ? c.getBoundingClientRect().width + 22 : 320;
+  };
+  if(prev) prev.addEventListener('click', () => sc.scrollBy({left: -step(), behavior:'smooth'}));
+  if(next) next.addEventListener('click', () => sc.scrollBy({left:  step(), behavior:'smooth'}));
+})();
+
+/* ───────────── SERVICE TABS ───────────── */
+(function(){
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.panel');
+  tabs.forEach(t => {
+    t.addEventListener('click', () => {
+      tabs.forEach(x => x.classList.remove('active'));
+      panels.forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      const which = t.dataset.tab;
+      const p = document.querySelector(`.panel[data-panel="${which}"]`);
+      if(p) p.classList.add('active');
+    });
+  });
+})();
+
+/* ───────────── TESTIMONIAL SLIDER (autoplay + dots) ───────────── */
+(function(){
+  const slides = document.querySelectorAll('.test-slide');
+  const dots = document.querySelectorAll('.test .dot');
+  if(!slides.length) return;
+  let i = 0; let timer;
+  const go = (n) => {
+    i = (n + slides.length) % slides.length;
+    slides.forEach((s,k) => s.classList.toggle('active', k===i));
+    dots.forEach((d,k) => d.classList.toggle('active', k===i));
+  };
+  const start = () => { timer = setInterval(() => go(i+1), 6500); };
+  const stop = () => clearInterval(timer);
+  dots.forEach((d,k) => d.addEventListener('click', () => { go(k); stop(); start(); }));
+  start();
+})();
+
+/* ───────────── PHONE MASK ───────────── */
+(function(){
+  const p = document.getElementById('f-phone');
+  if(!p) return;
+  p.addEventListener('input', () => {
+    let v = p.value.replace(/\D/g,'').slice(0,12);
+    if(v.startsWith('380')) v = v.slice(3);
+    let out = '+380';
+    if(v.length > 0) out += ' ' + v.slice(0,3);
+    if(v.length > 3) out += ' ' + v.slice(3,6);
+    if(v.length > 6) out += ' ' + v.slice(6,8);
+    if(v.length > 8) out += ' ' + v.slice(8,10);
+    p.value = out;
+  });
+})();
+
+/* ───────────── SERVICE CHIPS ───────────── */
+(function(){
+  const chips = document.querySelectorAll('#chips .chip');
+  const hidden = document.getElementById('f-service');
+  chips.forEach(c => {
+    c.addEventListener('click', () => {
+      chips.forEach(x => x.classList.remove('active'));
+      c.classList.add('active');
+      if(hidden) hidden.value = c.dataset.val;
+    });
+  });
+})();
+
+/* ───────────── STICKY MOBILE CTA: hide when booking visible / above hero ───────────── */
+(function(){
+  const mcta = document.getElementById('mcta');
+  if(!mcta) return;
+  const hero = document.getElementById('top');
+  const book = document.getElementById('book');
+  const onScroll = () => {
+    const past = window.scrollY > (hero ? hero.offsetHeight * 0.5 : 300);
+    const inBook = book ? (book.getBoundingClientRect().top < window.innerHeight && book.getBoundingClientRect().bottom > 80) : false;
+    if(past && !inBook) mcta.classList.remove('hide');
+    else mcta.classList.add('hide');
+  };
+  mcta.classList.add('hide');
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  onScroll();
+})();
+
+/* ───────────── FORM VALIDATION ───────────── */
+(function(){
+  const form = document.getElementById('form');
+  if(!form) return;
+  const setErr = (name, msg) => {
+    const el = form.querySelector(`.err[data-for="${name}"]`);
+    if(el) el.textContent = msg || '';
+  };
+  const clearAll = () => form.querySelectorAll('.err').forEach(e => e.textContent='');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    clearAll();
+    const data = new FormData(form);
+    let ok = true;
+    if(!String(data.get('name')||'').trim()){ setErr('name','введіть, будь ласка, ваше ім’я'); ok=false; }
+    const phone = String(data.get('phone')||'').replace(/\D/g,'');
+    if(phone.length < 11){ setErr('phone','перевірте номер телефону'); ok=false; }
+    if(!String(data.get('service')||'').trim()){ setErr('service','оберіть послугу вище'); ok=false; }
+    if(!data.get('date')){ setErr('date','оберіть дату'); ok=false; }
+    if(!data.get('time')){ setErr('time','оберіть час'); ok=false; }
+    if(!ok) return;
+
+    form.querySelector('.fields').style.display='none';
+    form.querySelector('.submit-row').style.display='none';
+    form.querySelector('.top').style.opacity='.55';
+    document.getElementById('success').classList.add('show');
+  });
+})();
+</script>
+</body>
+</html>
